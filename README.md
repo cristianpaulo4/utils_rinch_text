@@ -2,8 +2,8 @@ This method returns a list of TextSpan ideal for formatting long text
 this implementation supports the following tags, see example.
   
 \*bold text\*  
-<a>Link web<a>  
-<p>add paragraph<p>
+\<a>Link web\<a>  
+\<p>add paragraph\<p>
 
 ## Text de example:
 ```dart
