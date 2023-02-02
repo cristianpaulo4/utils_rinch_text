@@ -1,5 +1,5 @@
 name: utils_rinch_text
-description: A new Flutter package project.
+description: This method returns a list of TextSpan ideal for formatting long text this implementation supports the following tags, see example.
 version: 1.0.0
 homepage: https://github.com/cristianpaulo4/utils_rinch_text/tree/1.0.0
 
