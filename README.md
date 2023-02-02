@@ -5,6 +5,8 @@ this implementation supports the following tags, see example.
 \<a>Link web\<a>  
 \<p>add paragraph\<p>
 
+![Captura de tela 2023-02-02 180728](https://user-images.githubusercontent.com/45492072/216449815-b733bd09-4ffd-4743-90ee-cb375376881b.png)
+
 ## Text de example:
 ```dart
  String textExample = """
