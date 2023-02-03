@@ -5,42 +5,56 @@ import 'package:url_launcher/url_launcher.dart';
 class UtilsRinchText {
   /// This method returns a list of TextSpan ideal for formatting long text
   /// this implementation supports the following tags, see example.
-  ///
-  /// \*bold text\*
-  ///
   /// \<a>Link web\<a>
-  ///
-  /// \<p>add paragraph\<p>
 
-  static List<InlineSpan>? generate(String text) {
+  static List<InlineSpan>? generate(
+    String text, {
+    Map<String, TextStyle>? customTags,
+  }) {
     List<InlineSpan>? textSpanList = [];
-
     List textList = text.split(" ");
-
-    bool controlerBold = false;
-    bool controlerLink = false;
+    TextStyle? style;
+    String? tagCustom;
+    String? textSpan;
+    bool isLink = false;
 
     for (String element in textList) {
-      if (element.startsWith("*") || controlerBold) {
-        textSpanList.add(_textBold(element.replaceAll("*", "")));
+      if (element.length > 3 && customTags != null) {
+        if (element.startsWith("<")) {
+          tagCustom = element.substring(0, 3);
+          style = customTags[tagCustom];
+        }
+      }
+      if (element == "<p>") {
+        textSpanList.add(_spacer);
+      }
+      isLink = element.startsWith("<a>");
 
-        if (element.endsWith("*")) {
-          controlerBold = false;
-        } else {
-          controlerBold = true;
-        }
-      } else if (element.startsWith("<a>") || controlerLink) {
-        textSpanList.add(_textLink(element.replaceAll("<a>", "")));
-        if (element.endsWith("<a>")) {
-          controlerLink = false;
-        } else {
-          controlerLink = true;
-        }
+      if (tagCustom != null) {
+        textSpan = element.replaceAll(tagCustom, "").replaceAll("<p>", "");
       } else {
-        if (element.contains("<p>")) {
-          textSpanList.add(_spacer);
-        }
-        textSpanList.add(_textSpan(element.replaceAll("<p>", "")));
+        textSpan = element.replaceAll("<p>", "");
+      }
+
+      if (isLink) {
+        textSpanList.add(
+          _textLink(
+            textSpan,
+            style: style,
+          ),
+        );
+      } else {
+        textSpanList.add(
+          _textSpanCustom(
+            textSpan,
+            style: style,
+          ),
+        );
+      }
+
+      if (element.trim().endsWith(">")) {
+        style = null;
+        isLink = false;
       }
     }
     return textSpanList;
@@ -48,27 +62,20 @@ class UtilsRinchText {
 
   static TextSpan get _spacer => const TextSpan(text: "\n");
 
-  static TextSpan _textSpan(String text) => TextSpan(
+  static TextSpan _textSpanCustom(String text, {TextStyle? style}) => TextSpan(
         text: "$text ",
-        style: const TextStyle(height: 1.8),
+        style: style,
       );
 
-  static TextSpan _textBold(String text) => TextSpan(
-        text: "$text ",
-        style: const TextStyle(
-          height: 1.8,
-          fontWeight: FontWeight.bold,
-        ),
-      );
-
-  static TextSpan _textLink(url) => TextSpan(
+  static TextSpan _textLink(String url, {TextStyle? style}) => TextSpan(
         text: "$url ",
-        style: const TextStyle(
-          color: Colors.blue,
-        ),
+        style: style ??
+            const TextStyle(
+              color: Colors.blue,
+            ),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            final Uri uri = Uri.parse(url);
+            final Uri uri = Uri.parse(url.trim());
             launchUrl(uri);
           },
       );
