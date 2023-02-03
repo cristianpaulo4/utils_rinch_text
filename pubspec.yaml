@@ -1,6 +1,6 @@
 name: utils_rinch_text
 description: This method returns a list of TextSpan ideal for formatting long text this implementation supports the following tags, see example.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/cristianpaulo4/utils_rinch_text/tree/1.0.0
 
 environment:
