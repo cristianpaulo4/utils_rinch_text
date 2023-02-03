@@ -5,7 +5,7 @@ this implementation supports the following tags, see example.
 \<a>Link web\<a>  
 \<p> add paragraph
 
-![Captura de tela 2023-02-02 180728](https://user-images.githubusercontent.com/45492072/216449815-b733bd09-4ffd-4743-90ee-cb375376881b.png)
+![Captura de tela 2023-02-03 195339](https://user-images.githubusercontent.com/45492072/216726806-91313116-297d-4147-928d-f37e635d3268.png)
 
 Add custom tags
 
